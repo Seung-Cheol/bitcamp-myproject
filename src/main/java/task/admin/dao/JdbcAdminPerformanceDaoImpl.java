@@ -8,16 +8,17 @@ import java.util.List;
 import task.exception.DaoException;
 import task.member.vo.Member;
 import task.performance.vo.Performance;
+import task.util.ConnectionPool;
 
 public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
-  Connection con;
+  ConnectionPool connectionPool;
 
-  public JdbcAdminPerformanceDaoImpl(Connection con) {
-    this.con = con;
+  public JdbcAdminPerformanceDaoImpl(ConnectionPool connectionPool) {
+    this.connectionPool = connectionPool;
   }
   @Override
   public void add(Performance performance) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "insert into performance(title,content,seat,started_at,ended_at) values("
         + "?,?,?,?,?)"
     );) {
@@ -47,7 +48,7 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
 
   @Override
   public void modify(Performance performance) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "update performance set title=?,content=?,started_at=?,ended_at=? where no=?"
     );) {
       stmt.setString(1, performance.getTitle());
@@ -66,7 +67,7 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
 
   @Override
   public List<Performance> findAll() {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance"
     );) {
       ResultSet rs = stmt.executeQuery();
@@ -89,7 +90,7 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
 
   @Override
   public List<Member> findReserveMember(int performanceNo) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from member where no "
         + "in (select member_no from reservation where performance_no=?)"
     );) {

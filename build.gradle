@@ -7,7 +7,7 @@
 
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
-    id 'java-library'
+    id 'application'
 }
 
 repositories {
@@ -25,7 +25,9 @@ dependencies {
     implementation 'com.google.guava:guava:32.1.1-jre'
     //json library
     //implementation 'com.google.code.gson:gson:2.10.1'
-
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.85'
+    //multipart/form-data 파일 업로드 처리
+    implementation 'commons-fileupload:commons-fileupload:1.5'
 
     //MySQL JDBC Driver
     implementation 'com.mysql:mysql-connector-j:8.3.0'
@@ -38,7 +40,21 @@ java {
     }
 }
 
+application {
+    mainClass = 'task.App'
+}
+
 tasks.named('test') {
-    // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+// 자바 소스를 컴파일 할 때 적용할 옵션(Gradle 로 컴파일 할 때)
+tasks.withType(JavaCompile).configureEach {
+    // 프로젝트의 소스 파일 인코딩을 gradle에게 알려준다.
+    // $javac -encoding UTF-8 ..
+    options.encoding = 'UTF-8'
+}
+
+run {
+    standardInput = System.in
 }

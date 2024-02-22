@@ -8,16 +8,17 @@ import java.util.List;
 import task.exception.DaoException;
 import task.member.vo.Member;
 import task.performance.vo.Performance;
+import task.util.ConnectionPool;
 
 public class JdbcPerformanceDaoImpl implements PerformanceDao {
-  Connection con;
-  public JdbcPerformanceDaoImpl(Connection con) {
-    this.con = con;
+  ConnectionPool connectionPool;
+  public JdbcPerformanceDaoImpl(ConnectionPool connectionPool) {
+    this.connectionPool = connectionPool;
   }
 
   @Override
   public void add(int performanceNo, int memberNo) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "insert into reservation(performance_no, member_no) values(?,?)"
     );) {
       stmt.setInt(1,performanceNo);
@@ -28,7 +29,7 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
     }
   }
   public List<Performance> findForReservation(int memberNo) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance where no "
         + "in (select performance_no from reservation where member_no=?)"
     );) {
@@ -51,7 +52,7 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
   }
   @Override
   public void delete(int performanceNo, int memberNo) {
-    try( PreparedStatement stmt = con.prepareStatement(
+    try( PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "delete from reservation where performance_no = ? and member_no = ?"
     );) {
       stmt.setInt(1, performanceNo);
@@ -64,7 +65,7 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
 
   @Override
   public List<Performance> findAll() {
-    try(PreparedStatement stmt = con.prepareStatement("select * from performance");) {
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement("select * from performance");) {
 
       ResultSet rs = stmt.executeQuery();
       List<Performance> performances = new ArrayList<>();
@@ -85,7 +86,7 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
 
   @Override
   public List<Performance> findByWord(String word) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance where title like ?"
     );) {
       stmt.setString(1, "%" + word + "%");
@@ -108,10 +109,10 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
 
   @Override
   public int changeSeat(int performanceNo,int num) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance where no=?"
     );
-      PreparedStatement stmt2 = con.prepareStatement(
+      PreparedStatement stmt2 = connectionPool.getConnection().prepareStatement(
         "update performance set seat = ? where no = ?"
       );
     ) {

@@ -5,18 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="36e6001f-dfd0-45b1-9392-8f5800d3fb91" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gradle/8.2/checksums/checksums.lock" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.2/dependencies-accessors/dependencies-accessors.lock" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/dependencies-accessors/gc.properties" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.2/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.2/fileChanges/last-build.bin" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.2/fileHashes/fileHashes.lock" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/8.2/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
@@ -63,6 +57,10 @@
       <change afterPath="$PROJECT_DIR$/task1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/task/ClientApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/task/admin/dao/JdbcAdminPerformanceDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/admin/dao/JdbcAdminPerformanceDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/task/member/dao/JdbcMemberDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/member/dao/JdbcMemberDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/task/member/vo/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/member/vo/Member.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/task/performance/dao/JdbcPerformanceDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/performance/dao/JdbcPerformanceDaoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/task/performance/vo/Performance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/task/performance/vo/Performance.java" afterDir="false" />
@@ -133,10 +131,13 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/task/util" />
+      <recent name="$PROJECT_DIR$/src/main/java/task/member/servlet" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
       <recent name="$PROJECT_DIR$/src/main/java/task/menu" />
       <recent name="$PROJECT_DIR$/src/main/java/task" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="task.util" />
       <recent name="task.listener" />
       <recent name="task.exception" />
     </key>

@@ -5,21 +5,23 @@ import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import task.exception.DaoException;
 import task.member.vo.Member;
+import task.util.ConnectionPool;
 
 public class JdbcMemberDaoImpl implements MemberDao {
-  Connection con;
+  ConnectionPool connectionPool;
 
-  public JdbcMemberDaoImpl(Connection con) {
-    this.con = con;
+  public JdbcMemberDaoImpl(ConnectionPool connectionPool) {
+    this.connectionPool = connectionPool;
   }
 
   public int findByEmailAndPwd(Member member) {
-    try {
-      PreparedStatement stmt = con.prepareStatement();
-      String sql = String.format(
-        "SELECT no, email, auth FROM member WHERE email='%s' AND pwd='%s'"
-        ,member.getEmail(),member.getPwd());
-      ResultSet rs = stmt.executeQuery(sql);
+    String sql = String.format(
+      "SELECT no, email, auth FROM member WHERE email='%s' AND pwd='%s'"
+      ,member.getEmail(),member.getPwd());
+    try(
+      PreparedStatement stmt = connectionPool.getConnection().prepareStatement(sql);)
+    {
+      ResultSet rs = stmt.executeQuery();
       if(rs.next()) {
         return rs.getInt("no");
       } else {
@@ -30,7 +32,7 @@ public class JdbcMemberDaoImpl implements MemberDao {
     }
   }
   public int checkForadmin(Member member) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "SELECT no, email, auth FROM member WHERE email=? AND pwd=?"
     );) {
       stmt.setString(1,member.getEmail());
@@ -52,7 +54,7 @@ public class JdbcMemberDaoImpl implements MemberDao {
 
 
   public void add(Member member) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "insert into member(email,nickname,pwd) values(?,?,?)"
     );) {
       stmt.setString(1,member.getEmail());
