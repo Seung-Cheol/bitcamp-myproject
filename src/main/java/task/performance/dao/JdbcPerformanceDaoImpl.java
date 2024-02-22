@@ -40,7 +40,6 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
         performance.setNo(rs.getInt("no"));
         performance.setTitle(rs.getString(("title")));
         performance.setContent(rs.getString("content"));
-        performance.setSeat(rs.getInt("seat"));
         performance.setStarted_at(rs.getDate("started_at"));
         performance.setEnded_at(rs.getDate("ended_at"));
         performances.add(performance);
@@ -74,7 +73,6 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
         performance.setNo(rs.getInt("no"));
         performance.setTitle(rs.getString(("title")));
         performance.setContent(rs.getString("content"));
-        performance.setSeat(rs.getInt("seat"));
         performance.setStarted_at(rs.getDate("started_at"));
         performance.setEnded_at(rs.getDate("ended_at"));
         performances.add(performance);
@@ -97,7 +95,6 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
         Performance performance = new Performance();
         performance.setNo(rs.getInt("no"));
         performance.setTitle(rs.getString(("title")));
-        performance.setSeat(rs.getInt("seat"));
         performance.setContent(rs.getString("content"));
         performance.setStarted_at(rs.getDate("started_at"));
         performance.setEnded_at(rs.getDate("ended_at"));

@@ -1,13 +1,26 @@
 package task.performance.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Reservation {
   private int no;
   private int performance_no;
+  private int member_no;
+  private Date reserved_at;
+
+  private List<ReservationSeat> reservation_seats;
 
   public void setNo(int no) {
     this.no = no;
+  }
+
+  public List<ReservationSeat> getReservation_seats() {
+    return reservation_seats;
+  }
+
+  public void setReservation_seats(List<ReservationSeat> reservation_seats) {
+    this.reservation_seats = reservation_seats;
   }
 
   public void setPerformance_no(int performance_no) {
@@ -21,9 +34,6 @@ public class Reservation {
   public void setReserved_at(Date reserved_at) {
     this.reserved_at = reserved_at;
   }
-
-  private int member_no;
-  private Date reserved_at;
 
   public int getNo() {
     return no;

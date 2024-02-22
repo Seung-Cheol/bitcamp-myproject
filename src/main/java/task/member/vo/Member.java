@@ -9,6 +9,17 @@ public class Member {
   private String nickname;
   private String pwd;
   private int auth;
+  private Date createdAt;
+  private String grade;
+
+  public String getGrade() {
+    return grade;
+  }
+
+  public void setGrade(String grade) {
+    this.grade = grade;
+  }
+
   public int getNo() {
     return no;
   }
@@ -56,8 +67,6 @@ public class Member {
   public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
   }
-
-  private Date createdAt;
 
 
 

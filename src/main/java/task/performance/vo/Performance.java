@@ -5,17 +5,6 @@ public class Performance {
   private int no;
   private String title;
   private String content;
-
-  private int seat;
-
-  public int getSeat() {
-    return seat;
-  }
-
-  public void setSeat(int seat) {
-    this.seat = seat;
-  }
-
   private Date started_at;
   private Date ended_at;
 
