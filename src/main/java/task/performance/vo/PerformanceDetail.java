@@ -5,11 +5,29 @@ import java.util.List;
 
 public class PerformanceDetail {
   private int no;
-
   private int performance_no;
-
   private Date performance_date;
   private int place_no;
+  private Date started_at;
+
+  private Date ended_at;
+
+  public Date getStarted_at() {
+    return started_at;
+  }
+
+  public void setStarted_at(Date started_at) {
+    this.started_at = started_at;
+  }
+
+  public Date getEnded_at() {
+    return ended_at;
+  }
+
+  public void setEnded_at(Date ended_at) {
+    this.ended_at = ended_at;
+  }
+
   private List<PerformanceActor> performance_actors;
 
   public int getNo() {

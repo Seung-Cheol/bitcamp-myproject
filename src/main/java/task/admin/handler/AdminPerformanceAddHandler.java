@@ -28,7 +28,6 @@ public class AdminPerformanceAddHandler extends AbstractMenuHandler {
       System.out.println("관리자가 아닙니다");
       return;
     }
-
     Performance performance = new Performance();
     performance.setTitle(this.prompt.input("공연명? "));
     performance.setContent(this.prompt.input("내용? "));

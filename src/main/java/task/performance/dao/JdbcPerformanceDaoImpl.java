@@ -8,6 +8,8 @@ import java.util.List;
 import task.exception.DaoException;
 import task.member.vo.Member;
 import task.performance.vo.Performance;
+import task.performance.vo.Reservation;
+import task.performance.vo.ReservationSeat;
 import task.util.ConnectionPool;
 
 public class JdbcPerformanceDaoImpl implements PerformanceDao {
@@ -17,17 +19,56 @@ public class JdbcPerformanceDaoImpl implements PerformanceDao {
   }
 
   @Override
-  public void add(int performanceNo, int memberNo) {
+  public void add(int performanceDetailNo, int memberNo) {
     try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
-      "insert into reservation(performance_no, member_no) values(?,?)"
+      "insert into reservation(performance_detail_no, member_no) values(?,?)"
     );) {
-      stmt.setInt(1,performanceNo);
+      stmt.setInt(1, performanceDetailNo);
       stmt.setInt(2, memberNo);
       stmt.executeUpdate();
     } catch (Exception e) {
       throw new DaoException(e);
     }
   }
+
+  public void seatAdd(int reservationNo, String seatNo) {
+    try (PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
+      "insert into reservation_seat(reservation_no, seat_no) values(?,?)"
+    );) {
+      stmt.setInt(1, reservationNo);
+      stmt.setString(2, seatNo);
+      stmt.executeUpdate();
+    } catch (Exception e) {
+      throw new DaoException(e);
+    }
+  }
+
+  public List<ReservationSeat> findAllSeat(int performanceDetailNo) {
+    try (PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
+      "select "
+        + "a.no as reservation_no,"
+        + "a.performance_detail_no as performance_detail_no,"
+        + "a.reserved_at as reserved_at,"
+        + "b.seat_no as seat_no"
+        + "from reservation as a inner join reservatioseat as b "
+        + "on a.no = b.reservation_no"
+        + "where performance_detail_no=?"
+    );) {
+      stmt.setInt(1,performanceDetailNo);
+      ResultSet rs = stmt.executeQuery();
+      List<ReservationSeat> list = new ArrayList<>();
+      while(rs.next()) {
+        ReservationSeat rsvs = new ReservationSeat();
+        rsvs.setReservation_no(rs.getInt("reservation_no"));
+        rsvs.setSeat_no(rs.getString("seat_no"));
+        list.add(rsvs);
+      }
+      return list;
+    } catch (Exception e) {
+      throw new DaoException("시트 리스트 에러");
+    }
+  }
+
   public List<Performance> findForReservation(int memberNo) {
     try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance where no "

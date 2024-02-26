@@ -19,12 +19,11 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
   @Override
   public void add(Performance performance) {
     try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
-      "insert into performance(title,content,seat,started_at,ended_at) values("
+      "insert into performance(title,content,started_at,ended_at) values("
         + "?,?,?,?,?)"
     );) {
       stmt.setString(1, performance.getTitle());
       stmt.setString(2, performance.getContent());
-      stmt.setInt(3,performance.getSeat());
       stmt.setDate(4,performance.getStarted_at());
       stmt.setDate(5,performance.getEnded_at());
       stmt.executeUpdate();
@@ -77,7 +76,6 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
         performance.setNo(rs.getInt("no"));
         performance.setTitle(rs.getString(("title")));
         performance.setContent(rs.getString("content"));
-        performance.setSeat(rs.getInt("seat"));
         performance.setStarted_at(rs.getDate("started_at"));
         performance.setEnded_at(rs.getDate("ended_at"));
         performances.add(performance);

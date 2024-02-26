@@ -1,5 +1,6 @@
 package task.performance.vo;
 import java.sql.Date;
+import java.util.List;
 
 public class Performance {
   private int no;
@@ -7,6 +8,16 @@ public class Performance {
   private String content;
   private Date started_at;
   private Date ended_at;
+  private List<PerformancePicture> performance_pictures;
+
+  public List<PerformancePicture> getPerformance_pictures() {
+    return performance_pictures;
+  }
+
+  public void setPerformance_pictures(
+    List<PerformancePicture> performance_pictures) {
+    this.performance_pictures = performance_pictures;
+  }
 
   public void setNo(int no) {
     this.no = no;
