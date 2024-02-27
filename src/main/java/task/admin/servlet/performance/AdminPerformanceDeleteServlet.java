@@ -1,4 +1,4 @@
-package task.admin.servlet;
+package task.admin.servlet.performance;
 
 public class AdminPerformanceDeleteServlet {
 

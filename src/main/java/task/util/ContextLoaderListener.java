@@ -5,7 +5,9 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import task.admin.dao.AdminPerformanceDao;
+import task.admin.dao.AdminPlaceDao;
 import task.admin.dao.JdbcAdminPerformanceDaoImpl;
+import task.admin.dao.JdbcAdminPlaceDaoImpl;
 import task.member.dao.JdbcMemberDaoImpl;
 import task.member.dao.MemberDao;
 import task.performance.dao.JdbcPerformanceDaoImpl;
@@ -26,12 +28,14 @@ public class ContextLoaderListener implements ServletContextListener {
 
     MemberDao memberDao = new JdbcMemberDaoImpl(connectionPool);
     AdminPerformanceDao adminPerformanceDao = new JdbcAdminPerformanceDaoImpl(connectionPool);
+    AdminPlaceDao adminPlaceDao = new JdbcAdminPlaceDaoImpl();
     PerformanceDao performanceDao = new JdbcPerformanceDaoImpl(connectionPool);
     TransactionManager txManager = new TransactionManager(connectionPool);
 
     // 서블릿에서 사용할 수 있도록 웹애플리케이션 저장소에 보관한다.
     ServletContext 웹애플리케이션저장소 = sce.getServletContext();
     웹애플리케이션저장소.setAttribute("memberDao", memberDao);
+    웹애플리케이션저장소.setAttribute("adminPerformanceDao", adminPerformanceDao);
     웹애플리케이션저장소.setAttribute("adminPerformanceDao", adminPerformanceDao);
     웹애플리케이션저장소.setAttribute("performanceDao", performanceDao);
     웹애플리케이션저장소.setAttribute("txManager", txManager);

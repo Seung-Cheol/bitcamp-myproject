@@ -8,6 +8,7 @@ import java.util.List;
 import task.exception.DaoException;
 import task.member.vo.Member;
 import task.performance.vo.Performance;
+import task.performance.vo.PerformancePicture;
 import task.util.ConnectionPool;
 
 public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
@@ -17,7 +18,7 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
     this.connectionPool = connectionPool;
   }
   @Override
-  public void add(Performance performance) {
+  public int add(Performance performance) {
     try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "insert into performance(title,content,started_at,ended_at) values("
         + "?,?,?,?,?)"
@@ -27,6 +28,12 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
       stmt.setDate(4,performance.getStarted_at());
       stmt.setDate(5,performance.getEnded_at());
       stmt.executeUpdate();
+      int answer;
+      try (ResultSet keyRs = stmt.getGeneratedKeys()) {
+        keyRs.next();
+        answer = keyRs.getInt(1);
+      }
+      return answer;
     } catch (Exception e) {
       throw new DaoException(e);
     }
@@ -34,7 +41,7 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
 
   @Override
   public void delete(int no) {
-    try(PreparedStatement stmt = con.prepareStatement(
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "delete from performance where no=?"
     );) {
       stmt.setInt(1,no);
@@ -69,6 +76,29 @@ public class JdbcAdminPerformanceDaoImpl implements AdminPerformanceDao{
     try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
       "select * from performance"
     );) {
+      ResultSet rs = stmt.executeQuery();
+      List<Performance> performances = new ArrayList<>();
+      while(rs.next()){
+        Performance performance = new Performance();
+        performance.setNo(rs.getInt("no"));
+        performance.setTitle(rs.getString(("title")));
+        performance.setContent(rs.getString("content"));
+        performance.setStarted_at(rs.getDate("started_at"));
+        performance.setEnded_at(rs.getDate("ended_at"));
+        performances.add(performance);
+      }
+      return performances;
+    } catch (Exception e) {
+      throw new DaoException(e);
+    }
+  }
+
+  @Override
+  public List<Performance> findById(int performance_id) {
+    try(PreparedStatement stmt = connectionPool.getConnection().prepareStatement(
+      "select * from performance where performance_id=?"
+    );) {
+      stmt.setInt(1,performance_id);
       ResultSet rs = stmt.executeQuery();
       List<Performance> performances = new ArrayList<>();
       while(rs.next()){

@@ -1,4 +1,4 @@
-package task.admin.servlet;
+package task.admin.servlet.performanceDetail;
 
 public class AdminPerformanceDetailUpdateServlet {
 

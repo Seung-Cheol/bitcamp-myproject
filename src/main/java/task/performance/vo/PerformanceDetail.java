@@ -6,10 +6,8 @@ import java.util.List;
 public class PerformanceDetail {
   private int no;
   private int performance_no;
-  private Date performance_date;
   private int place_no;
   private Date started_at;
-
   private Date ended_at;
 
   public Date getStarted_at() {
@@ -44,14 +42,6 @@ public class PerformanceDetail {
 
   public void setPerformance_no(int performance_no) {
     this.performance_no = performance_no;
-  }
-
-  public Date getPerformance_date() {
-    return performance_date;
-  }
-
-  public void setPerformance_date(Date performance_date) {
-    this.performance_date = performance_date;
   }
 
   public int getPlace_no() {

@@ -1,23 +1,34 @@
-package task.admin.servlet;
+package task.admin.servlet.performance;
 
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import task.admin.dao.AdminPerformanceDao;
+import task.admin.dao.AdminPerformanceDetailDao;
+import task.admin.dao.AdminPerformanceFileDao;
 import task.admin.dao.JdbcAdminPerformanceDaoImpl;
 import task.performance.vo.Performance;
+import task.performance.vo.PerformancePicture;
 import task.util.TransactionManager;
 
 @WebServlet("/admin/performance/add")
 public class AdminPerformanceAddServlet extends HttpServlet {
   AdminPerformanceDao adminPerformanceDao;
+
+  AdminPerformanceDetailDao adminPerformanceDetailDao;
+
+  AdminPerformanceFileDao adminPerformanceFileDao;
   String uploadDir;
 
   TransactionManager txManager;
@@ -85,15 +96,28 @@ public class AdminPerformanceAddServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8");
-    Performance performance = new Performance();
-    performance.setTitle(request.getParameter("title"));
-    performance.setContent(request.getParameter("content"));
-    performance.setStarted_at(Date.valueOf(request.getParameter("started_at")));
-    performance.setEnded_at(Date.valueOf(request.getParameter("ended_at")));
     try {
+      request.setCharacterEncoding("UTF-8");
+      Performance performance = new Performance();
+      performance.setTitle(request.getParameter("title"));
+      performance.setContent(request.getParameter("content"));
+      performance.setStarted_at(Date.valueOf(request.getParameter("started_at")));
+      performance.setEnded_at(Date.valueOf(request.getParameter("ended_at")));
       txManager.startTransaction();
-      adminPerformanceDao.add(performance);
+      int pk = adminPerformanceDao.add(performance);
+      List<PerformancePicture> pictures = new ArrayList<>();
+      Collection<Part> parts = request.getParts();
+        for(Part part : parts) {
+          PerformancePicture picture = new PerformancePicture();
+          String filename = UUID.randomUUID().toString();
+          part.write(this.uploadDir + "/" + filename);
+          picture.setPerformance_no(pk);
+          picture.setPicture_code(filename);
+          picture.setPicture_name(part.getName());
+          pictures.add(picture);
+        }
+        adminPerformanceFileDao.add(pictures);
+
     } catch (Exception e) {
 
     }

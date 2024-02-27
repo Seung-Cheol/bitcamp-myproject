@@ -7,6 +7,15 @@ public class Place {
   private String place_name;
   private String content;
   private int seat;
+
+  public int getSeat() {
+    return seat;
+  }
+
+  public void setSeat(int seat) {
+    this.seat = seat;
+  }
+
   private List<PerformanceDetail> performance_details;
 
   public int getNo() {
